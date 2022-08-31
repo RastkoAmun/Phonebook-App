@@ -1,14 +1,18 @@
 import { useState } from 'react'
-import Person from './components/Person'
+import SearchFilter from './components/SearchFilter'
+import PersonForm from './components/PersonForm'
+import ListOfContacts from './components/ListOfContacts'
 
-const App = () => {
-  const [persons, setPerson] = useState([{
-    name: 'Magnus Carlsen',
-    number: '236-665-9989'
-  }])
+const App = (props) => {
+  const [persons, setPerson] = useState(props.people)
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
+  const [searchValue, setSearchValue] = useState('')
+ 
+  const filteredContacts = persons.filter((person) => 
+    person.name.toLowerCase().includes(searchValue.toLowerCase()))
+  
+  //Addins new contacts to phonebook
   const addPerson = (event) => {
     event.preventDefault();
     const newPerson = {
@@ -28,33 +32,29 @@ const App = () => {
     }
   }
 
-  const handleNameInput = (event) => {
-    setNewName(event.target.value);
+  const handleInput = (event) => {
+    if(event.target.className === 'name'){
+      setNewName(event.target.value);
+    }else{
+      setNewNumber(event.target.value);
+    }
   }
-  const handleNumberInput = (event) => {
-    setNewNumber(event.target.value);
+
+  const handleSearchInput = (event) => {
+    setSearchValue(event.target.value)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameInput}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberInput}/>
-        </div>
-        <div>
-          <button type='submit' onClick={addPerson}>add</button>
-        </div>
-      </form>
+      <SearchFilter value={searchValue} onChange={handleSearchInput}/>
+
+      <h2>Add a new</h2>
+      <PersonForm nameValue={newName} numberValue={newNumber} addPersonFunction={addPerson} onChange={handleInput}
+      />
+
       <h2>Numbers</h2>
-      <div>
-        {persons.map(person => 
-          <Person name={person.name} phoneNumber={person.number} key={person.name}/>)}
-      </div>
-      
+      <ListOfContacts contacts={filteredContacts}/>
     </div>
   );
 }
