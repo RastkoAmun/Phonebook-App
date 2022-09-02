@@ -1,6 +1,6 @@
 const SearchFilter = (props) => {
   return(
-    <p>Serach <input value={props.value} onChange={props.onChange}/></p>
+    <p>Search <input value={props.value} onChange={props.onChange}/></p>
   )
 }
 

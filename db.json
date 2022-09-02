@@ -1,0 +1,24 @@
+{
+  "contacts":[
+    {
+      "name": "Magnus Carlsen",
+      "number": "236-665-9989",
+      "id": 1
+    },
+    {
+      "name": "Hikaru Nakamura",
+      "number": "236-555-0078",
+      "id": 2
+    },
+    {
+      "name": "Gukesh D",
+      "number": "604-676-9822",
+      "id": 3
+    },
+    {
+      "name": "Sam Shankland",
+      "number": "345-322-0900",
+      "id": 4
+    }
+  ]
+}

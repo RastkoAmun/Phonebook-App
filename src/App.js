@@ -1,14 +1,23 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import SearchFilter from './components/SearchFilter'
 import PersonForm from './components/PersonForm'
 import ListOfContacts from './components/ListOfContacts'
+import axios from 'axios'
 
 const App = (props) => {
-  const [persons, setPerson] = useState(props.people)
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchValue, setSearchValue] = useState('')
- 
+
+  const hook = () => {
+    axios
+      .get('http://localhost:3001/contacts')
+      .then(response => setPersons(response.data))
+  }
+  useEffect(hook, [])
+
   const filteredContacts = persons.filter((person) => 
     person.name.toLowerCase().includes(searchValue.toLowerCase()))
   
@@ -26,7 +35,7 @@ const App = (props) => {
     if(isFound){
       alert(`${newPerson.name} is already added to phonebook`)
     }else{
-      setPerson(persons.concat(newPerson))
+      setPersons(persons.concat(newPerson))
       setNewName('')
       setNewNumber('')
     }
